@@ -5,13 +5,14 @@ echo "Vamos ativar o seu adaptador [TP-LINK TL-WN725N]"
 
 sleep 3
 
-apt update -y
+apt update 
 
 clear
-apt upgrade -y
+apt upgrade 
 
 clear
 apt install realtek-rtl8188eus
+
 
 clear
 printf 'blacklist r8188eus' | sudo tee -a '/etc/modprobe.d/realtek.conf'
@@ -44,4 +45,3 @@ else
     echo "O endereço MAC já está configurado como não gerenciado."
 fi
 
-echo "Finalizado!"
