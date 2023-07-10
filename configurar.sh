@@ -1,12 +1,8 @@
 #!/bin/bash
-
-
-
-
 clear
-echo "Vamos ativar o seu adaptador [TP-LINK TL-WN725N]"
+echo "Instalando o seu adaptador [TP-LINK TL-WN725N]"
 
-sleep 3
+sleep 2
 
 apt update -y
 
@@ -19,29 +15,6 @@ apt install realtek-rtl8188eus* -y
 
 printf 'blacklist r8188eus' | sudo tee -a '/etc/modprobe.d/realtek.conf'
 
+echo "agora execute o proximo script configNetworkManager.sh"
 
-if [ $# -ne 1 ]; then
-    echo "Uso: $0 <endereço MAC>"
-    exit 1
-fi
 
-mac_address="$1"
-config_file="/etc/NetworkManager/NetworkManager.conf"
-
-echo "Configurando NetworkManager com o endereço MAC: $mac_address"
-
-if ! sudo grep -q "unmanaged-devices=mac:$mac_address" "$config_file"; then
-    sudo sed -i "/\[keyfile\]/a unmanaged-devices=mac:$mac_address" "$config_file"
-	
-	echo "Ativando o modo monitor...."
-	sleep 1
-	airmon-ng check kill
-	
-	ip link set wlan0 down
-	
-	iw dev wlan0 set type monitor
-	
-    echo "Configuração concluída. e o modo monitor ja está ativo "
-else
-    echo "O endereço MAC já está configurado como não gerenciado."
-fi
