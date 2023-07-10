@@ -11,7 +11,7 @@ clear
 apt upgrade 
 
 clear
-apt install realtek-rtl8188eus
+apt install realtek-rtl8188eus*
 
 
 
