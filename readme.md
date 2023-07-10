@@ -7,10 +7,13 @@ Este script automatiza o processo de configuração do adaptador Wi-Fi TP-LINK T
 
 
 1. baixe o script ou clone o repositório:
-```git clone https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N```
+```bash
+git clone https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N```
 
- ou ```wget https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N/blob/main/configurar.sh```
+ ou ```bash
  
+ wget https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N/blob/main/configurar.sh```
+
 
 2. De permissão de execução e Execute o script `chmod +x configurar.sh` no terminal,
  fornecendo o endereço MAC do adaptador Wi-Fi como argumento:
