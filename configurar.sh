@@ -1,18 +1,20 @@
 #!/bin/bash
 
+
+
+
 clear
 echo "Vamos ativar o seu adaptador [TP-LINK TL-WN725N]"
 
 sleep 3
 
-apt update 
+apt update -y
 
 clear
-apt upgrade 
+apt upgrade -y
 
 clear
-apt install realtek-rtl8188eus*
-
+apt install realtek-rtl8188eus* -y
 
 
 printf 'blacklist r8188eus' | sudo tee -a '/etc/modprobe.d/realtek.conf'
@@ -39,8 +41,7 @@ if ! sudo grep -q "unmanaged-devices=mac:$mac_address" "$config_file"; then
 	
 	iw dev wlan0 set type monitor
 	
-    echo "Configuração concluída."
+    echo "Configuração concluída. e o modo monitor ja está ativo "
 else
     echo "O endereço MAC já está configurado como não gerenciado."
 fi
-
