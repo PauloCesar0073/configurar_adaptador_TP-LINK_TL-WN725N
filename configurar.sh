@@ -14,10 +14,9 @@ clear
 apt install realtek-rtl8188eus
 
 
-clear
+
 printf 'blacklist r8188eus' | sudo tee -a '/etc/modprobe.d/realtek.conf'
 
-clear
 
 if [ $# -ne 1 ]; then
     echo "Uso: $0 <endereço MAC>"
@@ -35,11 +34,11 @@ if ! sudo grep -q "unmanaged-devices=mac:$mac_address" "$config_file"; then
 	echo "Ativando o modo monitor...."
 	sleep 1
 	airmon-ng check kill
-	clear
+	
 	ip link set wlan0 down
-	clear
+	
 	iw dev wlan0 set type monitor
-	clear
+	
     echo "Configuração concluída."
 else
     echo "O endereço MAC já está configurado como não gerenciado."
