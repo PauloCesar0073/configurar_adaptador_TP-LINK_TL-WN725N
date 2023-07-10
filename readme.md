@@ -40,6 +40,10 @@ Este script automatiza o processo de configuração do adaptador Wi-Fi TP-LINK T
 
 5. Siga as instruções fornecidas no terminal durante o processo de configuração.
 
+
+
+após estas etapas seu adaptador podera trabalhar em`(modo monitor)` e você poderar usar corretamente ferramentas que necessitam de uma interface em modo monitor.
+
 ## Requisitos
 
 - Este script é destinado ao uso no Kali Linux versão do kernel `6.3.0-kali1-amd64`
@@ -47,3 +51,6 @@ Este script automatiza o processo de configuração do adaptador Wi-Fi TP-LINK T
 - É necessário ter privilégios de superusuário para executar o script.
 - Certifique-se de ter uma conexão de internet ativa para que o script possa atualizar e fazer upgrade do sistema, se necessário.
 
+
+<hr>
+espero que o ajude ! assim como me ajudou .
