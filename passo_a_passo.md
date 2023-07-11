@@ -38,7 +38,8 @@ echo 'blacklist r8188eus' | sudo tee -a '/etc/modprobe.d/realtek.conf'
 Execute o seguinte comando para obter o endereço MAC do adaptador Wi-Fi:
 
 ```bash
-ifconfig wlan0 | grep ether
+ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'
+
 ```
 
 Anote o endereço MAC que é exibido.

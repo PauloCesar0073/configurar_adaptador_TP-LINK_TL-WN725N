@@ -45,7 +45,7 @@ fi
 
 # Obter o endereço MAC do adaptador Wi-Fi
 textplain "Obtendo o endereço MAC do adaptador Wi-Fi..."
-mac_address=$(ifconfig wlan0 | awk '/ether/ {print $2}')
+mac_address=$(ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}')
 if [[ -z $mac_address ]]; then
     exit_with_error "Falha ao obter o endereço MAC do adaptador Wi-Fi."
 fi
