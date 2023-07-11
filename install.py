@@ -17,12 +17,12 @@ def dependecias():
 
 def update_system():
     print('Passo 1: Atualizar o Sistema\n')
-    run_command(['sudo', 'apt', 'update'])
-    run_command(['sudo', 'apt', 'upgrade'])
+    run_command(['sudo apt update'])
+    run_command(['sudo apt upgrade'])
 
 def install_driver():
     print('Passo 2: Instalar o Driver\n')
-    run_command(['sudo', 'apt', 'install', 'realtek-rtl8188eus*'])
+    run_command(['sudo apt install realtek-rtl8188eus*'])
 
 def add_to_blacklist():
     print('Passo 3: Adicionar o Adaptador à Blacklist\n')
@@ -31,7 +31,7 @@ def add_to_blacklist():
 def configure_network_manager():
     print('Passo 4: Configurar o NetworkManager\n')
     print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
-    mac_address = subprocess.run(['ifconfig', 'wlan0', '|', 'awk', "'/ether/ {print $2} /unspec/ {print $2}'"], capture_output=True, text=True).stdout.strip()
+    mac_address = subprocess.run(["ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'"], capture_output=True, text=True).stdout.strip()
 
     print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
     config = configparser.ConfigParser()
@@ -51,13 +51,13 @@ def enable_monitor_mode():
 
     if mode_choice == "1":
         print('Usando airmon-ng\n')
-        run_command(['sudo', 'airmon-ng', 'check', 'kill'])
-        run_command(['sudo', 'airmon-ng', 'start', 'wlan0'])
+        run_command(["sudo airmon-ng check kill"])
+        run_command(['sudo airmon-ng start wlan0'])
 
     elif mode_choice == "2":
         print('Usando iwconfig\n')
-        run_command(['sudo', 'ip', 'link', 'set', 'wlan0', 'down'])
-        run_command(['sudo', 'iw', 'dev', 'wlan0', 'set', 'type', 'monitor'])
+        run_command(['sudo ip link set wlan0 down'])
+        run_command(['sudo iw dev wlan0 set type monitor'])
 
     else:
         print('Opção inválida! Ative manualmente.')
