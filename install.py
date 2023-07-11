@@ -1,58 +1,64 @@
 import subprocess
+import configparser
 
-print('Passo 1: Atualizar o Sistema\n')
-subprocess.run(['sudo', 'apt', 'update'])
-subprocess.run(['sudo', 'apt', 'upgrade'])
+def run_command(command):
+    subprocess.run(command, shell=True)
 
-print('Passo 2: Instalar o Driver\n')
-subprocess.run(['sudo', 'apt', 'install', 'realtek-rtl8188eus*'])
+def update_system():
+    print('Passo 1: Atualizar o Sistema\n')
+    run_command(['sudo', 'apt', 'update'])
+    run_command(['sudo', 'apt', 'upgrade'])
 
-print('Passo 3: Adicionar o Adaptador à Blacklist\n')
-subprocess.run(['echo', 'blacklist r8188eus | sudo tee -a /etc/modprobe.d/realtek.conf'], shell=True)
+def install_driver():
+    print('Passo 2: Instalar o Driver\n')
+    run_command(['sudo', 'apt', 'install', 'realtek-rtl8188eus*'])
 
-print('Passo 4: Configurar o NetworkManager\n')
-print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
-mac_address = subprocess.run(['ifconfig', 'wlan0', '|', 'awk', "'/ether/ {print $2} /unspec/ {print $2}'"], capture_output=True, text=True).stdout.strip()
+def add_to_blacklist():
+    print('Passo 3: Adicionar o Adaptador à Blacklist\n')
+    run_command("echo 'blacklist r8188eus' | sudo tee -a '/etc/modprobe.d/realtek.conf'")
 
-print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
-subprocess.run(['sudo', 'nano', '/etc/NetworkManager/NetworkManager.conf'])
+def configure_network_manager():
+    print('Passo 4: Configurar o NetworkManager\n')
+    print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
+    mac_address = subprocess.run(['ifconfig', 'wlan0', '|', 'awk', "'/ether/ {print $2} /unspec/ {print $2}'"], capture_output=True, text=True).stdout.strip()
 
-print('Passo 4.3. Adicionar as Configurações ao Arquivo\n')
-network_manager_conf = f'''
-[main]
-plugins=ifupdown,keyfile
+    print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
+    config = configparser.ConfigParser()
+    config.read('/etc/NetworkManager/NetworkManager.conf')
 
-[device]
-wifi.scan-rand-mac-address=no
+    if 'keyfile' not in config.sections():
+        config['keyfile'] = {}
+    
+    config['keyfile']['unmanaged-devices'] = f'mac:{mac_address}'
 
-[ifupdown]
-managed=false
+    with open('/etc/NetworkManager/NetworkManager.conf', 'w') as configfile:
+        config.write(configfile)
 
-[connection]
-wifi.powersave=0
+def enable_monitor_mode():
+    print("Passo 5: Colocar o Adaptador em Modo Monitor:\n")
+    mode_choice = input("Deseja tentar em qual modo?\n1. Usando airmon-ng\n2. Usando iwconfig\n")
 
-[keyfile]
-unmanaged-devices=mac:{mac_address}
-'''
-with open('/etc/NetworkManager/NetworkManager.conf', 'a') as file:
-    file.write(network_manager_conf)
+    if mode_choice == "1":
+        print('Usando airmon-ng\n')
+        run_command(['sudo', 'airmon-ng', 'check', 'kill'])
+        run_command(['sudo', 'airmon-ng', 'start', 'wlan0'])
 
-print("Passo 5: Colocar o Adaptador em Modo Monitor:")
+    elif mode_choice == "2":
+        print('Usando iwconfig\n')
+        run_command(['sudo', 'ip', 'link', 'set', 'wlan0', 'down'])
+        run_command(['sudo', 'iw', 'dev', 'wlan0', 'set', 'type', 'monitor'])
 
-a = input("desja tentar em qual modo :\n1.Usando airmon-ng\n2.Usando iwconfig\n")
+    else:
+        print('Opção inválida! Ative manualmente.')
 
+def main():
+    update_system()
+    install_driver()
+    add_to_blacklist()
+    configure_network_manager()
+    enable_monitor_mode()
 
-if a == "1":
-    print('Usando airmon-ng')
-    subprocess.run(['sudo', 'airmon-ng', 'check', 'kill'])
-    subprocess.run(['sudo', 'airmon-ng', 'start', 'wlan0'])
+    print("Agora é só realizar um scan. Caso não consiga, reinicie o Kali e coloque a interface em modo monitor e tente novamente um scan")
 
-
-elif a == "2":
-    print('Usando iwconfig')
-    subprocess.run(['sudo', 'ip', 'link', 'set', 'wlan0', 'down'])
-    subprocess.run(['sudo', 'iw', 'dev', 'wlan0', 'set', 'type', 'monitor'])
-else:
-    print('opção inválida ative manualmente !')
-
-print("a  gora é so Realizar um scan")
+if __name__ == "__main__":
+    main()
