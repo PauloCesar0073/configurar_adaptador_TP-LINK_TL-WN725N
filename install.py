@@ -25,7 +25,7 @@ def add_to_blacklist():
 def configure_network_manager():
     print('Passo 4: Configurar o NetworkManager\n')
     print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
-    mac_address = os.popen("ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'").read().strip()
+    mac_address = os.system("ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'").read().strip()
 
     print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
     config = configparser.ConfigParser()
