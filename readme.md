@@ -11,7 +11,7 @@ Se você possui o adaptador Wi-Fi TP-LINK TL-WN725N e deseja configurá-lo no Ka
 ```bash
 git clone https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N &&
 cd configurar_adaptador_TP-LINK_TL-WN725N &&
-chmod +x install.sh &&
+chmod +x install.py &&
 clear &&
 ./install.sh
 ```
