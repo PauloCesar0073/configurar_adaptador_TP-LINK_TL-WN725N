@@ -1,8 +1,19 @@
 import subprocess
 import configparser
 
+
+
+
 def run_command(command):
     subprocess.run(command, shell=True)
+
+
+def dependecias():
+
+    run_command(['pip install subprocess'])
+    run_command(['pip install configparser'])
+
+
 
 def update_system():
     print('Passo 1: Atualizar o Sistema\n')
@@ -52,6 +63,7 @@ def enable_monitor_mode():
         print('Opção inválida! Ative manualmente.')
 
 def main():
+    dependecias()
     update_system()
     install_driver()
     add_to_blacklist()
