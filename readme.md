@@ -5,7 +5,7 @@
 
 - ou usar um script que automatiza o processo:
 <br>
-``` git clone ```
+``` git clone https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N && cd configurar_adaptador_TP-LINK_TL-WN725N && chmod +x install.sh && clear && ./install.sh```
 
 
 # observações
