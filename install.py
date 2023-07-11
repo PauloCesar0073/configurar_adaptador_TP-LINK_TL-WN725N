@@ -28,6 +28,10 @@ def configure_network_manager():
     print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
         # Capturar a saída do comando em uma variável
     mac_output = subprocess.check_output(["ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'"], shell=True, text=True).strip()
+
+
+
+
     mac_address = mac_output
 
 
@@ -35,26 +39,29 @@ def configure_network_manager():
 
 
 
+    cmd = f"""[main]
+plugins=ifupdown,keyfile
+
+[device]
+wifi.scan-rand-mac-address=no
+
+[ifupdown]
+managed=false
+
+[connection]
+wifi.powersave=0
+
+[keyfile]
+unmanaged-devices=mac:{mac_output}
+"""
 
 
 
 
 
     print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
-    config = configparser.ConfigParser()
-    config.optionxform = str  # Manter o case-sensitive
-    config.read('/etc/NetworkManager/NetworkManager.conf')
 
-    if 'keyfile' not in config.sections():
-        config['keyfile'] = {}
-
-    if 'unmanaged-devices' not in config['keyfile']:
-        config['keyfile']['unmanaged-devices'] = f'mac:{mac_address}'
-
-        with open('/etc/NetworkManager/NetworkManager.conf', 'w') as configfile:
-            config.write(configfile)
-    else:
-        print("A opção 'unmanaged-devices' já existe no arquivo de configuração.")
+    os.system(f'echo {cmd} >> /etc/NetworkManager/NetworkManager.conf')
 
 
 def enable_monitor_mode():
