@@ -3,7 +3,7 @@
 Se você possui o adaptador Wi-Fi TP-LINK TL-WN725N e deseja configurá-lo no Kali Linux, existem duas opções disponíveis:
 
 1. **Configuração Manual (Passo a Passo):**
-   Se você preferir configurar manualmente, siga o [passo a passo](passo_a_passo) fornecido.
+   Se você preferir configurar manualmente, siga o [passo a passo](https://github.com/PauloCesar0073/configurar_adaptador_TP-LINK_TL-WN725N/blob/main/passo_a_passo.md) fornecido.
 
 2. **Script de Automação:**
    Você também pode usar um script que automatiza o processo de configuração. Execute os seguintes comandos no terminal:
