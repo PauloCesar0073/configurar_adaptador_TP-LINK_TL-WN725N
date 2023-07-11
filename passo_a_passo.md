@@ -97,19 +97,21 @@ sudo ip link set wlan0 down
 sudo iw dev wlan0 set type monitor
 ```
 
-## Passo 6: Realizar um Scan com o Airodump-ng
+## Passo 6: Reinicie seu kali e apos tente Realizar um Scan com wifite
 
-Agora você pode usar o `airodump-ng` para realizar um scan e visualizar as redes Wi-Fi disponíveis:
+Agora você pode usar o `wifite` para realizar um scan e visualizar as redes Wi-Fi disponíveis:
 
 ```bash
-sudo airodump-ng wlan0
+reboot
+```
+
+```bash
+sudo wifite
 ```
 
 Observe que o adaptador está em modo monitor e você verá as informações das redes Wi-Fi detectadas.
-
-Certifique-se de usar as opções apropriadas do `airodump-ng` para personalizar o scan de acordo com suas necessidades.
-
 Lembre-se de que o adaptador estará em modo monitor até que você o restaure para o modo normal.
+
 
 ## Conclusão
 
