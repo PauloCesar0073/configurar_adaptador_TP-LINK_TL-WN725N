@@ -1,21 +1,18 @@
 import os
-import configparser
 import subprocess
+from time import sleep
 
 
 def dependencies():
-    os.system('pip install configparser')
-
-
-def update_system():
-    print('Passo 1: Atualizar o Sistema\n')
     os.system('sudo apt update')
     os.system('sudo apt upgrade')
-
-
-def install_driver():
-    print('Passo 2: Instalar o Driver\n')
     os.system('sudo apt install realtek-rtl8188eus*')
+    
+
+    print(30*"=","\n")
+    print('\n\n\ndependências instaladas\n')
+    print(30*"=","\n")
+
 
 
 def add_to_blacklist():
@@ -32,23 +29,28 @@ def configure_network_manager():
     cmd = f"[main]\nplugins=ifupdown,keyfile\n[device]\nwifi.scan-rand-mac-address=no\n[ifupdown]\nmanaged=false\n[connection]\nwifi.powersave=0\n[keyfile]\nunmanaged-devices=mac:{mac_output}"
 
     print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
+    sleep(2)
 
     os.system(f'echo "{cmd}" > /etc/NetworkManager/NetworkManager.conf')
+    print(30*"=","\n")
+    print("configurado ! \n")
+    print(30*"=","\n")
 
 
 def enable_monitor_mode():
     print("Passo 5: Colocar o Adaptador em Modo Monitor:\n")
-    mode_choice = input("Deseja tentar em qual modo?\n1. Usando airmon-ng\n2. Usando iwconfig\n")
+    mode_choice = input("Deseja tentar em qual modo?\n1.Sim\n2.Não\n")
 
-    if mode_choice == "1":
-        print('Usando airmon-ng\n')
-        os.system('sudo airmon-ng check kill')
-        os.system('sudo airmon-ng start wlan0')
-
-    elif mode_choice == "2":
+    if mode_choice == "s":
         print('Usando iwconfig\n')
         os.system('sudo ip link set wlan0 down')
         os.system('sudo iw dev wlan0 set type monitor')
+        print(30*"=","\n")
+        print("modo monitor ativo !\n\n")
+        print(30*"=","\n")
+    elif mode_choice == "2":
+        os.system("clear")
+        print("ok ...coloque manualmente !\n\n")
 
     else:
         print('Opção inválida! Ative manualmente.')
@@ -56,13 +58,12 @@ def enable_monitor_mode():
 
 def main():
     dependencies()
-    update_system()
-    install_driver()
     add_to_blacklist()
     configure_network_manager()
     enable_monitor_mode()
-
-    print("Agora é só realizar um scan. Caso não consiga, reinicie o Kali, coloque a interface em modo monitor e tente novamente um scan")
+    print(40*"=","\n")
+    print("Agora é só realizar um scan. Caso não consiga, reinicie o Kali, coloque a interface em modo monitor e tente novamente um scan\nEX: wifite")
+    print(40*"=","\n")
 
 
 if __name__ == "__main__":
