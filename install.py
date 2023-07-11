@@ -28,7 +28,7 @@ def configure_network_manager():
     print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
         # Capturar a saída do comando em uma variável
     mac_output = subprocess.check_output(["ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'"], shell=True, text=True).strip()
-    mac_address = mac_output.decode('utf-8')
+    mac_address = mac_output
 
 
 
