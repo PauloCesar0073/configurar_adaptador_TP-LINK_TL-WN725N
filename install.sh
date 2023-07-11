@@ -33,7 +33,7 @@ fi
 
 # Instalar o driver necessário
 textplain "Instalando o driver para o adaptador Wi-Fi..."
-if ! apt install -y realtek-rtl8188eus; then
+if ! apt install -y realtek-rtl8188eus*; then
     exit_with_error "Falha ao instalar o driver necessário."
 fi
 
