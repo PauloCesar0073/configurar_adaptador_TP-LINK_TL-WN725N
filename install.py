@@ -1,5 +1,6 @@
 import os
 import configparser
+import subprocess
 
 
 def dependencies():
@@ -25,19 +26,35 @@ def add_to_blacklist():
 def configure_network_manager():
     print('Passo 4: Configurar o NetworkManager\n')
     print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
-    mac_address = os.system("ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'")
+        # Capturar a saída do comando em uma variável
+    mac_output = subprocess.check_output(["ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'"], shell=True, text=True).strip()
+    mac_address = mac_output.decode('utf-8')
+
+
+
+
+
+
+
+
+
+
 
     print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
     config = configparser.ConfigParser()
+    config.optionxform = str  # Manter o case-sensitive
     config.read('/etc/NetworkManager/NetworkManager.conf')
 
     if 'keyfile' not in config.sections():
         config['keyfile'] = {}
 
-    config['keyfile']['unmanaged-devices'] = f'mac:{mac_address}'
+    if 'unmanaged-devices' not in config['keyfile']:
+        config['keyfile']['unmanaged-devices'] = f'mac:{mac_address}'
 
-    with open('/etc/NetworkManager/NetworkManager.conf', 'w') as configfile:
-        config.write(configfile)
+        with open('/etc/NetworkManager/NetworkManager.conf', 'w') as configfile:
+            config.write(configfile)
+    else:
+        print("A opção 'unmanaged-devices' já existe no arquivo de configuração.")
 
 
 def enable_monitor_mode():
@@ -71,3 +88,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
