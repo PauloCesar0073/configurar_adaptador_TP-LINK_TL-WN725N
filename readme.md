@@ -17,6 +17,7 @@ clear &&
 ```
 
 **Observações:**
+- recomendo o passo a passo pois o script automatizado pode deixar passar erros !
 
 - Certifique-se de que o adaptador esteja ativo no seu Kali Linux. Verifique digitando `lsusb` no terminal.
 
