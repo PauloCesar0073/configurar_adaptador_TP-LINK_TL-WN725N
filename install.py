@@ -28,40 +28,12 @@ def configure_network_manager():
     print('Passo 4.1. Obter o Endereço MAC do Adaptador Wi-Fi\n')
         # Capturar a saída do comando em uma variável
     mac_output = subprocess.check_output(["ifconfig wlan0 | awk '/ether/ {print $2} /unspec/ {print $2}'"], shell=True, text=True).strip()
-
-
-
-
     mac_address = mac_output
-
-
-
-
-
-
-    cmd = f"""[main]
-plugins=ifupdown,keyfile
-
-[device]
-wifi.scan-rand-mac-address=no
-
-[ifupdown]
-managed=false
-
-[connection]
-wifi.powersave=0
-
-[keyfile]
-unmanaged-devices=mac:{mac_output}
-"""
-
-
-
-
+    cmd = f"[main]\nplugins=ifupdown,keyfile\n[device]\nwifi.scan-rand-mac-address=no\n[ifupdown]\nmanaged=false\n[connection]\nwifi.powersave=0\n[keyfile]\nunmanaged-devices=mac:{mac_output}"
 
     print('Passo 4.2. Editar o Arquivo NetworkManager.conf\n')
 
-    os.system(f'echo {cmd} >> /etc/NetworkManager/NetworkManager.conf')
+    os.system(f'echo "{cmd}" > /etc/NetworkManager/NetworkManager.conf')
 
 
 def enable_monitor_mode():
