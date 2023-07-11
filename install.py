@@ -41,7 +41,7 @@ def enable_monitor_mode():
     print("Passo 5: Colocar o Adaptador em Modo Monitor:\n")
     mode_choice = input("Deseja tentar em qual modo?\n1.Sim\n2.Não\n")
 
-    if mode_choice == "s":
+    if mode_choice == "1":
         print('Usando iwconfig\n')
         os.system('sudo ip link set wlan0 down')
         os.system('sudo iw dev wlan0 set type monitor')
