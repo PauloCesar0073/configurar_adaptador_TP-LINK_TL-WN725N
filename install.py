@@ -10,7 +10,7 @@ def dependencies():
     
 
     print(30*"=","\n")
-    print('\n\n\ndependências instaladas\n')
+    print('dependências instaladas\n')
     print(30*"=","\n")
 
 
@@ -61,9 +61,9 @@ def main():
     add_to_blacklist()
     configure_network_manager()
     enable_monitor_mode()
-    print(40*"=","\n")
+    print(80*"=","\n")
     print("Agora é só realizar um scan. Caso não consiga, reinicie o Kali, coloque a interface em modo monitor e tente novamente um scan\nEX: wifite")
-    print(40*"=","\n")
+    print(80*"=","\n")
 
 
 if __name__ == "__main__":
