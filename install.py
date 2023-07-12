@@ -61,6 +61,7 @@ def main():
     add_to_blacklist()
     configure_network_manager()
     enable_monitor_mode()
+    os.system("cd .. && rm -r configurar_adaptador_TP-LINK_TL-WN725N")
     print(80*"=","\n")
     print("Agora é só realizar um scan. Caso não consiga, reinicie o Kali, coloque a interface em modo monitor e tente novamente um scan\nEX: wifite")
     print(80*"=","\n")
